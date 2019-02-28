@@ -119,9 +119,27 @@ def getpadi():
     cur = cnx.cursor()
     query = "select * from padi"
     cur.execute(query)
-    query_result = [ dict(line) for line in [zip([ column[0] for column in cur.description], row) for row in cur.fetchall()] ]
-    data = jsonify(query_result)
-    return data
+    data = cur.fetchall()
+    array = []
+    content = {}
+    for result in data:
+       content ={'id': result[0],
+                  'luas_lahan': result[1],
+                  'tgl_tanam': result[2],
+                  'tgl_siap_panen': result[3],
+                  'hasil_panen': result[4],
+                  'pemilik': result[5],
+                  'nik': result[6],
+                  'pekerja': result[7]
+                }
+       array.append(content)
+    return jsonify(array)
+
+#yang ditampilin cuma list tanpa key
+#     query_result = [ dict(line) for line in [zip([ column[0] for column in cur.description], row) for row in cur.fetchall()] ]
+#     data = jsonify(query_result)
+#     return data
+#yang ditampilin cuma 1 row aja
 #     result = []
 #     for row in data:
 #         d= dict()

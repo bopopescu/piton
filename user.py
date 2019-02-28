@@ -47,15 +47,25 @@ def getuser():
     query = "select * from orang"
     cur.execute(query)
     data = cur.fetchall()
-    result = []
-    for row in data:
-        d= dict()
-        d['id'] = row[0]
-        d['name'] = row[1]
-        d['country'] = row[2]
-        d['city'] = row[3]
-        result.append(d)
-        return json.dumps(result, indent=4)
+    array = []
+    content = {}
+    for result in data:
+       content ={'id': result[0],
+                  'name': result[1],
+                  'country': result[2],
+                  'city': result[3]
+                }
+       array.append(content)
+    return jsonify(array)
+# cuma ngambil data dari row pertama
+#     for key in data:
+#         d= dict()
+#         d['id'] = key[0]
+#         d['name'] = key[1]
+#         d['country'] = key[2]
+#         d['city'] = key[3]
+#         array.append(d)
+#         return json.dumps(array)
 
 @app.route('/user/input', methods =['POST'])
 def input():
